@@ -59,11 +59,11 @@ kramdown:
 
 # 评论系统
 # Disqus（https://disqus.com/）
- disqus_username: Anyeler
+# disqus_username: Anyeler
 
 # Gitalk
 gitalk:
-  enable: false    #是否开启Gitalk评论
+  enable: true    #是否开启Gitalk评论
   clientID: e84704a220ac28ba7148                            #生成的clientID
   clientSecret: f29659711b188138ba57b9f6b3851566d0183127    #生成的clientSecret
   repo: anyeler.github.io    #仓库名称
@@ -76,11 +76,11 @@ gitalk:
 
 # Analytics settings
 # Baidu Analytics
-# ba_track_id: 0802a36d8ff22800c469e45e6e428d4a
+ ba_track_id: 0802a36d8ff22800c469e45e6e428d4a
 
 # Google Analytics
-# ga_track_id: 'UA-119925002-1'            # Format: UA-xxxxxx-xx
-# ga_domain: auto               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
+ ga_track_id: 'UA-119925002-1'            # Format: UA-xxxxxx-xx
+ ga_domain: auto               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
 
 
 
