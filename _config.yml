@@ -2,10 +2,10 @@
 title: Anyeler Blog
 SEOTitle: 张远文的博客 | Anyeler Blog
 header-img: img/post-bg-ioses.jpg
-email: xiaowenapple@163.com
+email: xiaowenapple@gmail.com
 description: "Every failure is leading towards success."
-keyword: "BY, Anyeler Blog, 张远文的博客, Anyeler, 张远文, iOS, Apple, iPhone"
-url: "http://anyeler.github.io"          # your host, for absolute URL
+keyword: "Anyeler Blog, 张远文的博客, Anyeler, 张远文, iOS, Apple, iPhone"
+url: "https://anyeler.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 github_repo: "https://github.com/Anyeler/anyeler.github.io" # you code repository
 
@@ -18,12 +18,14 @@ sidebar-avatar: /img/avatar_logo_me.jpg      # use absolute URL, seeing it's use
 
 # SNS settings
 RSS: false
-# weibo_username:     username
-# zhihu_username:     username
+# weibo_username:     1751653061
+# zhihu_username:     username 
+linkedin_username:  远文-张-4a25bb151
+gmail_username:     xiaowenapple
 github_username:    Anyeler
 # facebook_username:  username
 jianshu_username:   19d46f9575ee
-#twitter_username:   qiubaiying
+#twitter_username:   Anyeler
 
 
 
@@ -57,7 +59,7 @@ kramdown:
 
 # 评论系统
 # Disqus（https://disqus.com/）
-# disqus_username: qiubaiying
+# disqus_username: Anyeler
 
 # Gitalk
 gitalk:
@@ -86,7 +88,7 @@ gitalk:
 
 # Featured Tags
 featured-tags: true                     # 是否使用首页标签
-featured-condition-size: 0              # 相同标签数量大于这个数，才会出现在首页
+featured-condition-size: 1              # 相同标签数量大于这个数，才会出现在首页
 
 
 
