@@ -59,11 +59,11 @@ kramdown:
 
 # 评论系统
 # Disqus（https://disqus.com/）
-# disqus_username: Anyeler
+ disqus_username: Anyeler
 
 # Gitalk
 gitalk:
-  enable: true    #是否开启Gitalk评论
+  enable: false    #是否开启Gitalk评论
   clientID: e84704a220ac28ba7148                            #生成的clientID
   clientSecret: f29659711b188138ba57b9f6b3851566d0183127    #生成的clientSecret
   repo: anyeler.github.io    #仓库名称
