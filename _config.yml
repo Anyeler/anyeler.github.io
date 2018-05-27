@@ -18,10 +18,10 @@ sidebar-avatar: /img/avatar_logo_me.jpg      # use absolute URL, seeing it's use
 
 # SNS settings
 RSS: false
-weibo_username:     1751653061
+# weibo_username:     1751653061
 # zhihu_username:     username 
-linkedin_username:  远文-张-4a25bb151
-gmail_username:     xiaowenapple
+# linkedin_username:  远文-张-4a25bb151
+# gmail_username:     xiaowenapple
 github_username:    Anyeler
 # facebook_username:  username
 jianshu_username:   19d46f9575ee
@@ -63,7 +63,7 @@ kramdown:
 
 # Gitalk
 gitalk:
-  enable: false    #是否开启Gitalk评论
+  enable: true    #是否开启Gitalk评论
   clientID: e84704a220ac28ba7148                            #生成的clientID
   clientSecret: f29659711b188138ba57b9f6b3851566d0183127    #生成的clientSecret
   repo: anyeler.github.io    #仓库名称
