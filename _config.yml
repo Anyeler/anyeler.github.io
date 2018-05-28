@@ -4,7 +4,7 @@ SEOTitle: 张远文的博客 | Anyeler Blog
 header-img: img/post-bg-ioses.jpg
 email: xiaowenapple@gmail.com
 description: "Every failure is leading towards success."
-keyword: "Anyeler Blog, 张远文的博客, Anyeler, 张远文, iOS, Apple, iPhone"
+keyword: "Anyeler Blog, 张远文的博客, Anyeler, 张远文, 远文, iOS, Apple, iPhone"
 url: "https://anyeler.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 github_repo: "https://github.com/Anyeler/anyeler.github.io" # you code repository
@@ -101,6 +101,9 @@ service-worker: true
 # Friends
 friends: [
     {
+        title: "喵神",
+        href: "https://onevcat.com"
+    },{
         title: "Apple",
         href: "https://apple.com"
     },{
