@@ -1,8 +1,7 @@
-
 ---
 layout:     post
 title:      使用Cocoapods创建私有podspec
-subtitle:   
+subtitle:   简述Cocoapods的使用
 date:       2017-09-27
 author:     Anyeler
 header-img: img/post-bg-debug.png
@@ -12,7 +11,7 @@ tags:
     - Cocoapods
 ---
 
-# 使用Cocoapods创建私有podspec
+
 【**简介**】目前公司正在需要封装swift的私有公共库，所以需要了解针对swift进行配置封装。
 
 ## 常用 pod 命令
@@ -108,3 +107,4 @@ tags:
 - [wtlucky's Blog](http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/)
 - [布袋男儿](https://huos3203.github.io/2017/02/28/swift/使用Cocoapods创建私有podspec/)
 - [刘春桂的博客](https://liuchungui.gitbooks.io/blog/content/cocoapodsmd.html)
+
