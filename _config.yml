@@ -76,10 +76,10 @@ gitalk:
 
 # Analytics settings
 # Baidu Analytics
-ba_track_id: 0802a36d8ff22800c469e45e6e428d4a
+ba_track_id: c292fdf321c21491356a9d209a74750c
 
 # Google Analytics
-ga_track_id: 'UA-119925002-1'            # Format: UA-xxxxxx-xx
+ga_track_id: 'UA-119925002-2'            # Format: UA-xxxxxx-xx
 ga_domain: anyeler.top               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
 
 
