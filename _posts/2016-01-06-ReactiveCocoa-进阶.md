@@ -14,8 +14,6 @@ tags:
 ---
 # 前言
 
-![测试](https://anypics.oss-cn-beijing.aliyuncs.com/img/849589-20171015223238449-2146169197.gif)
-
 >在[上篇文章](http://qiubaiying.github.io/2016/12/26/ReactiveCocoa-基础/)中介绍了**ReactiveCocoa**的基础知识,接下来我们来深入介绍**ReactiveCocoa**及其在**MVVM**中的用法。
 
 
