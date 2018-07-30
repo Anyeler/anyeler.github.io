@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      浅谈IOS TouchID以及APP的数字锁屏
+title:      浅谈iOS TouchID以及APP的数字锁屏
 subtitle:   iOS开发中遇到的锁屏功能常常会使用到指纹验证
 date:       2017-01-15
 author:     Anyeler
