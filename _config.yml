@@ -101,12 +101,22 @@ service-worker: true
 # Friends
 friends: [
     {
+        title: "简书·Anyeler",
+        href: "https://www.jianshu.com/u/19d46f9575ee"
+    },
+    {
+        title: "小专栏·Anyeler",
+        href: "https://xiaozhuanlan.com/u/anyeler"
+    },
+    {
         title: "喵神",
         href: "https://onevcat.com"
-    },{
+    },
+    {
         title: "Apple",
         href: "https://apple.com"
-    },{
+    },
+    {
         title: "Apple Developer",
         href: "https://developer.apple.com/"
     }
