@@ -9,6 +9,14 @@
 # 理论概述
 本文章将会讨论 `CoreFoundation` 和 `Foundation` 框架里面的 `Collection` 类，当然也会简单的讲述自己定义的类，怎么实现 `copy` 和 `mutableCopy` 方法。
 
+| 类名 | 操作 | 新对象 | 新类名 | 新元素对象 | 调用旧元素对应的Copy方法 | 拷贝方式 | 内容拷贝 |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| NS* | copy | NO | NS* | NO | NO | 浅拷贝 | NO |
+|  | mutableCopy | YES | NSMutable* | NO | NO | 浅拷贝 | NO |
+| NSMutable* | copy | YES | NS* | NO | NO | 浅拷贝 | NO |
+|  | mutableCopy | YES | NSMutable* | NO | NO | 浅拷贝 | NO |
+
+
 
 # 验证过程
 
