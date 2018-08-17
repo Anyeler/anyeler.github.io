@@ -83,6 +83,13 @@ NSLog(@"mutableCopyStr(%@<%p>: %p): %@", [mutableCopyStr class], &mutableCopyStr
 NSLog(@"end");
 ```
 
+```
+2018-08-17 13:39:14.788482+0800 TestCocoOC[9649:625978] str(__NSCFConstantString<0x7ffeef6130c8>: 0x1005ee148): abc
+2018-08-17 13:39:14.788608+0800 TestCocoOC[9649:625978] copyStr(__NSCFConstantString<0x7ffeef6130c0>: 0x1005ee148): abc
+2018-08-17 13:39:14.789036+0800 TestCocoOC[9649:625978] mutableCopyStr(__NSCFString<0x7ffeef6130b8>: 0x608000444aa0): abc
+2018-08-17 13:39:14.789251+0800 TestCocoOC[9649:625978] end
+```
+
 ## NSMutableString
 
 ```objc
@@ -94,6 +101,14 @@ NSLog(@"str(%@<%p>: %p): %@", [str class], &str, str, str);
 NSLog(@"copyStr(%@<%p>: %p): %@", [copyStr class], &copyStr, copyStr, copyStr);
 NSLog(@"mutableCopyStr(%@<%p>: %p): %@", [mutableCopyStr class], &mutableCopyStr, mutableCopyStr, mutableCopyStr);
 NSLog(@"end");
+```
+
+
+```
+2018-08-17 13:39:26.601180+0800 TestCocoOC[9649:625978] str(__NSCFString<0x7ffeef6130c8>: 0x6000000599b0): abc
+2018-08-17 13:39:26.601411+0800 TestCocoOC[9649:625978] copyStr(NSTaggedPointerString<0x7ffeef6130c0>: 0xa000000006362613): abc
+2018-08-17 13:39:26.601701+0800 TestCocoOC[9649:625978] mutableCopyStr(__NSCFString<0x7ffeef6130b8>: 0x60000005ad00): abc
+2018-08-17 13:39:26.602004+0800 TestCocoOC[9649:625978] end
 ```
 
 ## NSArray
@@ -112,6 +127,25 @@ NSLog(@"mutableCopyArray(%@<%p>: %p): %@", [mutableCopyArray class], &mutableCop
 NSLog(@"end");
 ```
 
+```
+2018-08-17 13:39:43.724273+0800 TestCocoOC[9649:625978] array(__NSArrayI<0x7ffeef613090>: 0x60c00024c3f0): (
+"<Person: 0x60c0004246c0>",
+"<Person: 0x60c000421ae0>",
+"<Person: 0x60c000422ae0>"
+)
+2018-08-17 13:39:43.724481+0800 TestCocoOC[9649:625978] copyArray(__NSArrayI<0x7ffeef613088>: 0x60c00024c3f0): (
+"<Person: 0x60c0004246c0>",
+"<Person: 0x60c000421ae0>",
+"<Person: 0x60c000422ae0>"
+)
+2018-08-17 13:39:43.724713+0800 TestCocoOC[9649:625978] mutableCopyArray(__NSArrayM<0x7ffeef613080>: 0x60c00024c2a0): (
+"<Person: 0x60c0004246c0>",
+"<Person: 0x60c000421ae0>",
+"<Person: 0x60c000422ae0>"
+)
+2018-08-17 13:39:43.724984+0800 TestCocoOC[9649:625978] end
+```
+
 ## NSMutableArray
 
 ```objc
@@ -126,6 +160,25 @@ NSLog(@"array(%@<%p>: %p): %@", [array class], &array, array, array);
 NSLog(@"copyArray(%@<%p>: %p): %@", [copyArray class], &copyArray, copyArray, copyArray);
 NSLog(@"mutableCopyArray(%@<%p>: %p): %@", [mutableCopyArray class], &mutableCopyArray, mutableCopyArray, mutableCopyArray);
 NSLog(@"end");
+```
+
+```
+2018-08-17 13:41:31.266514+0800 TestCocoOC[9649:625978] array(__NSArrayM<0x7ffeef613090>: 0x6040002440b0): (
+"<Person: 0x604000039460>",
+"<Person: 0x6040000392c0>",
+"<Person: 0x6040000391c0>"
+)
+2018-08-17 13:41:31.266738+0800 TestCocoOC[9649:625978] copyArray(__NSArrayI<0x7ffeef613088>: 0x604000243d20): (
+"<Person: 0x604000039460>",
+"<Person: 0x6040000392c0>",
+"<Person: 0x6040000391c0>"
+)
+2018-08-17 13:41:31.267018+0800 TestCocoOC[9649:625978] mutableCopyArray(__NSArrayM<0x7ffeef613080>: 0x604000242820): (
+"<Person: 0x604000039460>",
+"<Person: 0x6040000392c0>",
+"<Person: 0x6040000391c0>"
+)
+2018-08-17 13:41:31.267208+0800 TestCocoOC[9649:625978] end
 ```
 
 ## NSDictionary
@@ -143,6 +196,25 @@ NSLog(@"mutableCopyDict(%@<%p>: %p): %@", [mutableCopyDict class], &mutableCopyD
 NSLog(@"end");
 ```
 
+```
+2018-08-17 13:41:48.389669+0800 TestCocoOC[9649:625978] dict(__NSDictionaryI<0x7ffeef613088>: 0x6000000730c0): {
+key = qwe;
+num = 1;
+person = "<Person: 0x600000037da0>";
+}
+2018-08-17 13:41:48.389843+0800 TestCocoOC[9649:625978] copyDict(__NSDictionaryI<0x7ffeef613080>: 0x6000000730c0): {
+key = qwe;
+num = 1;
+person = "<Person: 0x600000037da0>";
+}
+2018-08-17 13:41:48.390006+0800 TestCocoOC[9649:625978] mutableCopyDict(__NSDictionaryM<0x7ffeef613078>: 0x600000036900): {
+key = qwe;
+num = 1;
+person = "<Person: 0x600000037da0>";
+}
+2018-08-17 13:41:48.390375+0800 TestCocoOC[9649:625978] end
+```
+
 ## NSMutableDictionary
 
 ```objc
@@ -156,6 +228,25 @@ NSLog(@"dict(%@<%p>: %p): %@", [dict class], &dict, dict, dict);
 NSLog(@"copyDict(%@<%p>: %p): %@", [copyDict class], &copyDict, copyDict, copyDict);
 NSLog(@"mutableCopyDict(%@<%p>: %p): %@", [mutableCopyDict class], &mutableCopyDict, mutableCopyDict, mutableCopyDict);
 NSLog(@"end");
+```
+
+```
+2018-08-17 13:42:18.754223+0800 TestCocoOC[9649:625978] dict(__NSDictionaryM<0x7ffeef613088>: 0x604000039040): {
+key = qwe;
+num = 1;
+person = "<Person: 0x6040000391e0>";
+}
+2018-08-17 13:42:18.754484+0800 TestCocoOC[9649:625978] copyDict(__NSFrozenDictionaryM<0x7ffeef613080>: 0x6040000392c0): {
+key = qwe;
+num = 1;
+person = "<Person: 0x6040000391e0>";
+}
+2018-08-17 13:42:18.754631+0800 TestCocoOC[9649:625978] mutableCopyDict(__NSDictionaryM<0x7ffeef613078>: 0x604000039400): {
+key = qwe;
+num = 1;
+person = "<Person: 0x6040000391e0>";
+}
+2018-08-17 13:42:18.754877+0800 TestCocoOC[9649:625978] end
 ```
 
 ## NSSet
@@ -173,6 +264,25 @@ NSLog(@"mutableCopySet(%@<%p>: %p): %@", [mutableCopySet class], &mutableCopySet
 NSLog(@"end");
 ```
 
+```
+2018-08-17 13:43:29.316827+0800 TestCocoOC[9813:648649] set(__NSSetI<0x7ffee4e07090>: 0x60400024d5c0): {(
+<Person: 0x60400003b360>,
+<Person: 0x60400003b280>,
+<Person: 0x60400003b1e0>
+)}
+2018-08-17 13:43:29.316999+0800 TestCocoOC[9813:648649] copySet(__NSSetI<0x7ffee4e07088>: 0x60400024d5c0): {(
+<Person: 0x60400003b360>,
+<Person: 0x60400003b280>,
+<Person: 0x60400003b1e0>
+)}
+2018-08-17 13:43:29.317350+0800 TestCocoOC[9813:648649] mutableCopySet(__NSSetM<0x7ffee4e07080>: 0x60400003b0e0): {(
+<Person: 0x60400003b360>,
+<Person: 0x60400003b280>,
+<Person: 0x60400003b1e0>
+)}
+2018-08-17 13:43:29.317455+0800 TestCocoOC[9813:648649] end
+```
+
 ## NSMutableSet
 
 ```objc
@@ -187,6 +297,26 @@ NSLog(@"copySet(%@<%p>: %p): %@", [copySet class], &copySet, copySet, copySet);
 NSLog(@"mutableCopySet(%@<%p>: %p): %@", [mutableCopySet class], &mutableCopySet, mutableCopySet, mutableCopySet);
 NSLog(@"end");
 ```
+
+```
+2018-08-17 13:43:52.278444+0800 TestCocoOC[9813:648649] set(__NSSetM<0x7ffee4e07090>: 0x60400003b360): {(
+<Person: 0x60400003b2a0>,
+<Person: 0x60400003b040>,
+<Person: 0x60400003b160>
+)}
+2018-08-17 13:43:52.278611+0800 TestCocoOC[9813:648649] copySet(__NSSetI<0x7ffee4e07088>: 0x60400024dd10): {(
+<Person: 0x60400003b2a0>,
+<Person: 0x60400003b040>,
+<Person: 0x60400003b160>
+)}
+2018-08-17 13:43:52.278686+0800 TestCocoOC[9813:648649] mutableCopySet(__NSSetM<0x7ffee4e07080>: 0x60400003b140): {(
+<Person: 0x60400003b2a0>,
+<Person: 0x60400003b040>,
+<Person: 0x60400003b160>
+)}
+2018-08-17 13:43:52.279086+0800 TestCocoOC[9813:648649] end
+```
+
 
 # 结论分析
 
