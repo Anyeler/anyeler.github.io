@@ -75,6 +75,7 @@ Apple 文档中是这样描述：
 `Class cluster` 是 Apple 对**抽象工厂设计模式**的称呼。使用**抽象类**初始化返回一个具体的子类的模式的好处就是让调用者只需要知道抽象类开放出来的API的作用，而不需要知道子类的背后复杂的逻辑。验证结论过程的类簇对应关系请看这篇 [Class Clusters 文档](https://gist.github.com/Catfish-Man/bc4a9987d4d7219043afdf8ee536beb2)。
 
 ## NSString
+首先，验证字符串常量 `NSString` 调用 `copy` 和 `mutableCopy` 的情况。运行以下的测试代码：
 
 ```objc
 NSString *str = @"abc"; // __NSCFConstantString
@@ -84,15 +85,30 @@ NSMutableString *mutableCopyStr = [str mutableCopy]; // __NSCFString
 NSLog(@"str(%@<%p>: %p): %@", [str class], &str, str, str);
 NSLog(@"copyStr(%@<%p>: %p): %@", [copyStr class], &copyStr, copyStr, copyStr);
 NSLog(@"mutableCopyStr(%@<%p>: %p): %@", [mutableCopyStr class], &mutableCopyStr, mutableCopyStr, mutableCopyStr);
+[mutableCopyStr appendString:@"add"];
+NSLog(@"mutableCopyStr(%@<%p>: %p): %@", [mutableCopyStr class], &mutableCopyStr, mutableCopyStr, mutableCopyStr);
 NSLog(@"end");
 ```
 
+打印的结果如下：
+
 ```
-2018-08-17 13:39:14.788482+0800 TestCocoOC[9649:625978] str(__NSCFConstantString<0x7ffeef6130c8>: 0x1005ee148): abc
-2018-08-17 13:39:14.788608+0800 TestCocoOC[9649:625978] copyStr(__NSCFConstantString<0x7ffeef6130c0>: 0x1005ee148): abc
-2018-08-17 13:39:14.789036+0800 TestCocoOC[9649:625978] mutableCopyStr(__NSCFString<0x7ffeef6130b8>: 0x608000444aa0): abc
-2018-08-17 13:39:14.789251+0800 TestCocoOC[9649:625978] end
+2018-08-17 15:17:00.323254+0800 TestCocoOC[12366:898331] str(__NSCFConstantString<0x7ffee96d80c8>: 0x106529148): abc
+2018-08-17 15:17:00.323383+0800 TestCocoOC[12366:898331] copyStr(__NSCFConstantString<0x7ffee96d80c0>: 0x106529148): abc
+2018-08-17 15:17:00.323637+0800 TestCocoOC[12366:898331] mutableCopyStr(__NSCFString<0x7ffee96d80b8>: 0x60c000240870): abc
+2018-08-17 15:17:00.323855+0800 TestCocoOC[12366:898331] mutableCopyStr(__NSCFString<0x7ffee96d80b8>: 0x60c000240870): abcadd
+2018-08-17 15:17:00.323918+0800 TestCocoOC[12366:898331] end
 ```
+
+Class Clusters 分析：
+1. `__NSCFConstantString` 是字符串常量类，可看作 `NSString`。
+2. `__NSCFString` 是字符串类，通常可看作 `NSMutableString`。
+
+根据以上测试代码和打印的结果显示，可进行以下分析：
+1. 变量 `str` 和 `copyStr` 打印出来的地址是相同的，都是 `0x106529148`而且类名相同，都是 `__NSCFConstantString`，说明只是浅拷贝，而且是 `NSString`。
+2. 变量 `mutableCopyStr` 打印出的类名 `__NSCFString`，和其他的结果不一样，而且能够添加字符串，所以是 `NSMutableString`。  
+
+根据以上验证可总结以下结果：
 
 | 类名 | 操作 | 新对象 | 新类名 | 新元素对象 | 调用旧元素对应的Copy方法 | 拷贝类型 | 元素拷贝 |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
@@ -112,6 +128,7 @@ NSLog(@"mutableCopyStr(%@<%p>: %p): %@", [mutableCopyStr class], &mutableCopyStr
 NSLog(@"end");
 ```
 
+打印的结果如下：
 
 ```
 2018-08-17 13:39:26.601180+0800 TestCocoOC[9649:625978] str(__NSCFString<0x7ffeef6130c8>: 0x6000000599b0): abc
@@ -140,6 +157,8 @@ NSLog(@"copyArray(%@<%p>: %p): %@", [copyArray class], &copyArray, copyArray, co
 NSLog(@"mutableCopyArray(%@<%p>: %p): %@", [mutableCopyArray class], &mutableCopyArray, mutableCopyArray, mutableCopyArray);
 NSLog(@"end");
 ```
+
+打印的结果如下：
 
 ```
 2018-08-17 13:39:43.724273+0800 TestCocoOC[9649:625978] array(__NSArrayI<0x7ffeef613090>: 0x60c00024c3f0): (
@@ -181,6 +200,8 @@ NSLog(@"mutableCopyArray(%@<%p>: %p): %@", [mutableCopyArray class], &mutableCop
 NSLog(@"end");
 ```
 
+打印的结果如下：
+
 ```
 2018-08-17 13:41:31.266514+0800 TestCocoOC[9649:625978] array(__NSArrayM<0x7ffeef613090>: 0x6040002440b0): (
 "<Person: 0x604000039460>",
@@ -219,6 +240,8 @@ NSLog(@"copyDict(%@<%p>: %p): %@", [copyDict class], &copyDict, copyDict, copyDi
 NSLog(@"mutableCopyDict(%@<%p>: %p): %@", [mutableCopyDict class], &mutableCopyDict, mutableCopyDict, mutableCopyDict);
 NSLog(@"end");
 ```
+
+打印的结果如下：
 
 ```
 2018-08-17 13:41:48.389669+0800 TestCocoOC[9649:625978] dict(__NSDictionaryI<0x7ffeef613088>: 0x6000000730c0): {
@@ -259,6 +282,8 @@ NSLog(@"mutableCopyDict(%@<%p>: %p): %@", [mutableCopyDict class], &mutableCopyD
 NSLog(@"end");
 ```
 
+打印的结果如下：
+
 ```
 2018-08-17 13:42:18.754223+0800 TestCocoOC[9649:625978] dict(__NSDictionaryM<0x7ffeef613088>: 0x604000039040): {
 key = qwe;
@@ -298,6 +323,8 @@ NSLog(@"mutableCopySet(%@<%p>: %p): %@", [mutableCopySet class], &mutableCopySet
 NSLog(@"end");
 ```
 
+打印的结果如下：
+
 ```
 2018-08-17 13:43:29.316827+0800 TestCocoOC[9813:648649] set(__NSSetI<0x7ffee4e07090>: 0x60400024d5c0): {(
 <Person: 0x60400003b360>,
@@ -336,6 +363,8 @@ NSLog(@"copySet(%@<%p>: %p): %@", [copySet class], &copySet, copySet, copySet);
 NSLog(@"mutableCopySet(%@<%p>: %p): %@", [mutableCopySet class], &mutableCopySet, mutableCopySet, mutableCopySet);
 NSLog(@"end");
 ```
+
+打印的结果如下：
 
 ```
 2018-08-17 13:43:52.278444+0800 TestCocoOC[9813:648649] set(__NSSetM<0x7ffee4e07090>: 0x60400003b360): {(
