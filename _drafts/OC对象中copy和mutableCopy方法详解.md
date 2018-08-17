@@ -67,8 +67,12 @@
 
 
 # 验证结论概括
+接下来的章节就是验证以上的结论的过程，不过这里需要注意的是验证过程中打印出来的类名都是 `NS*` 和 `NSMutable*` 的 **Class Clusters（类簇）**。
+Apple 文档中是这样描述：
 
+> an architecture that groups a number of private, concrete subclasses under a public, abstract superclass. （一个在共有的抽象超类下设置一组私有子类的架构）
 
+`Class cluster` 是 Apple 对**抽象工厂设计模式**的称呼。使用**抽象类**初始化返回一个具体的子类的模式的好处就是让调用者只需要知道抽象类开放出来的API的作用，而不需要知道子类的背后复杂的逻辑。验证结论过程的类簇对应关系请看这篇 [Class Clusters 文档](https://gist.github.com/Catfish-Man/bc4a9987d4d7219043afdf8ee536beb2)。
 
 ## NSString
 
@@ -90,6 +94,11 @@ NSLog(@"end");
 2018-08-17 13:39:14.789251+0800 TestCocoOC[9649:625978] end
 ```
 
+| 类名 | 操作 | 新对象 | 新类名 | 新元素对象 | 调用旧元素对应的Copy方法 | 拷贝类型 | 元素拷贝 |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| NSString | copy | NO | NSString | NO | NO | 浅拷贝 | NO |
+|  | mutableCopy | YES | NSMutableString | NO | NO | 深拷贝 | NO |
+
 ## NSMutableString
 
 ```objc
@@ -110,6 +119,11 @@ NSLog(@"end");
 2018-08-17 13:39:26.601701+0800 TestCocoOC[9649:625978] mutableCopyStr(__NSCFString<0x7ffeef6130b8>: 0x60000005ad00): abc
 2018-08-17 13:39:26.602004+0800 TestCocoOC[9649:625978] end
 ```
+
+| 类名 | 操作 | 新对象 | 新类名 | 新元素对象 | 调用旧元素对应的Copy方法 | 拷贝类型 | 元素拷贝 |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| NSMutableString | copy | YES | NSString | NO | NO | 深拷贝 | NO |
+|  | mutableCopy | YES | NSMutableString | NO | NO | 深拷贝 | NO |
 
 ## NSArray
 
@@ -146,6 +160,11 @@ NSLog(@"end");
 2018-08-17 13:39:43.724984+0800 TestCocoOC[9649:625978] end
 ```
 
+| 类名 | 操作 | 新对象 | 新类名 | 新元素对象 | 调用旧元素对应的Copy方法 | 拷贝类型 | 元素拷贝 |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| NSArray | copy | NO | NSArray | NO | NO | 浅拷贝 | NO |
+|  | mutableCopy | YES | NSMutableArray | NO | NO | 深拷贝 | NO |
+
 ## NSMutableArray
 
 ```objc
@@ -181,6 +200,11 @@ NSLog(@"end");
 2018-08-17 13:41:31.267208+0800 TestCocoOC[9649:625978] end
 ```
 
+| 类名 | 操作 | 新对象 | 新类名 | 新元素对象 | 调用旧元素对应的Copy方法 | 拷贝类型 | 元素拷贝 |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| NSMutableArray | copy | YES | NSArray | NO | NO | 深拷贝 | NO |
+|  | mutableCopy | YES | NSMutableArray | NO | NO | 深拷贝 | NO |
+
 ## NSDictionary
 
 ```objc
@@ -214,6 +238,11 @@ person = "<Person: 0x600000037da0>";
 }
 2018-08-17 13:41:48.390375+0800 TestCocoOC[9649:625978] end
 ```
+
+| 类名 | 操作 | 新对象 | 新类名 | 新元素对象 | 调用旧元素对应的Copy方法 | 拷贝类型 | 元素拷贝 |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| NSDictionary | copy | NO | NSDictionary | NO | NO | 浅拷贝 | NO |
+|  | mutableCopy | YES | NSMutableDictionary | NO | NO | 深拷贝 | NO |
 
 ## NSMutableDictionary
 
@@ -249,6 +278,11 @@ person = "<Person: 0x6040000391e0>";
 2018-08-17 13:42:18.754877+0800 TestCocoOC[9649:625978] end
 ```
 
+| 类名 | 操作 | 新对象 | 新类名 | 新元素对象 | 调用旧元素对应的Copy方法 | 拷贝类型 | 元素拷贝 |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| NSMutableDictionary | copy | YES | NSDictionary | NO | NO | 深拷贝 | NO |
+|  | mutableCopy | YES | NSMutableDictionary | NO | NO | 深拷贝 | NO |
+
 ## NSSet
 
 ```objc
@@ -282,6 +316,11 @@ NSLog(@"end");
 )}
 2018-08-17 13:43:29.317455+0800 TestCocoOC[9813:648649] end
 ```
+
+| 类名 | 操作 | 新对象 | 新类名 | 新元素对象 | 调用旧元素对应的Copy方法 | 拷贝类型 | 元素拷贝 |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| NSSet | copy | NO | NSSet | NO | NO | 浅拷贝 | NO |
+|  | mutableCopy | YES | NSMutableSet | NO | NO | 深拷贝 | NO |
 
 ## NSMutableSet
 
@@ -317,6 +356,11 @@ NSLog(@"end");
 2018-08-17 13:43:52.279086+0800 TestCocoOC[9813:648649] end
 ```
 
+
+| 类名 | 操作 | 新对象 | 新类名 | 新元素对象 | 调用旧元素对应的Copy方法 | 拷贝类型 | 元素拷贝 |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| NSMutableSet | copy | YES | NSSet | NO | NO | 深拷贝 | NO |
+|  | mutableCopy | YES | NSMutableSet | NO | NO | 深拷贝 | NO |
 
 # 结论分析
 
