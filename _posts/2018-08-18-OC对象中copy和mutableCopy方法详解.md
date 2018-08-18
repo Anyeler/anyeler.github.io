@@ -1,9 +1,20 @@
-# 目录
-[TOC]
+---
+layout:     post
+title:      OC对象中copy和mutableCopy方法详解
+subtitle:   详解OC对象中copy和mutableCopy方法和注意事项
+date:       2018-08-18
+author:     Anyeler
+header-img: img/post-bg-debug.png
+catalog: true
+tags:
+    - iOS
+    - Objective-C
+    - 笔记
+---
 
 
 # 前言
-前段时间，看到在*知识小集*的交流群里正在讨论 `copy` 和 `mutableCopy` 这两个方法的相关特性。而这两个方法的使用，对于 `Collection` 来说，确实在运行的时候会有些不一样。
+前段时间，看到在*知识小集*的交流群里正在讨论 `copy` 和 `mutableCopy` 这两个方法的相关特性。而这两个方法的使用，对于 `Collection` 来说，确实在运行的时候会有些不一样。主要还是为了记录一下，避免以后忘记，所以写了这篇文章。
 
 
 # 理论概述
@@ -116,6 +127,7 @@ Class Clusters 分析：
 |  | mutableCopy | YES | NSMutableString | NO | NO | 深拷贝 | NO |
 
 ## NSMutableString
+**可变字符串**的 `copy` 和 `mutableCopy`操作，测试代码如下：
 
 ```objc
 NSMutableString *str = [NSMutableString stringWithString:@"abc"]; // __NSCFString
@@ -137,12 +149,23 @@ NSLog(@"end");
 2018-08-17 13:39:26.602004+0800 TestCocoOC[9649:625978] end
 ```
 
+Class Clusters 分析：
+1. `NSTaggedPointerString` 是字符串常量类，可看作 `NSString`，这个类具备 `Tagged Pointer` 特性。
+2. `__NSCFString` 是字符串类，通常可看作 `NSMutableString`。
+
+根据打印的结果可得出以下分析：
+1. `str`、`copyStr` 和 `mutableCopyStr` 指针指向的地址都是**不一样**的，说明都生成了新对象。
+2. `copy` 方法生成**不可变字符串**对象，`mutableCopy` 方法生成的是**可变字符串**对象。
+
+根据以上验证可总结以下结果：
+
 | 类名 | 操作 | 新对象 | 新类名 | 新元素对象 | 调用旧元素对应的Copy方法 | 拷贝类型 | 元素拷贝 |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | NSMutableString | copy | YES | NSString | NO | NO | 深拷贝 | NO |
 |  | mutableCopy | YES | NSMutableString | NO | NO | 深拷贝 | NO |
 
 ## NSArray
+数组的拷贝操作，都是针对数组容器对象处理，数组里面的元素对象都是不变的。测试代码如下：
 
 ```objc
 Person *person1 = [[Person alloc] init];
@@ -179,12 +202,24 @@ NSLog(@"end");
 2018-08-17 13:39:43.724984+0800 TestCocoOC[9649:625978] end
 ```
 
+Class Clusters 分析：
+1. `__NSArrayI` 是不可变数组子类，可看作 `NSArray`。
+2. `__NSArrayM` 是可变数组子类，通常可看作 `NSMutableArray`。
+
+根据以上测试代码和打印的结果显示，可进行以下分析：
+1. 变量 `array` 和 `copyArray` 打印出来的地址是相同的，都是 `0x60c00024c3f0`而且类名相同，都是 `__NSArrayI`，说明只是浅拷贝，而且是 `NSArray`。
+2. 变量 `mutableCopyStr` 打印出的类名 `__NSArrayM`，所以是 `NSMutableArray`。 
+3. 数组里的元素打印的对象地址都是一样的。
+
+根据以上验证可总结以下结果：
+
 | 类名 | 操作 | 新对象 | 新类名 | 新元素对象 | 调用旧元素对应的Copy方法 | 拷贝类型 | 元素拷贝 |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | NSArray | copy | NO | NSArray | NO | NO | 浅拷贝 | NO |
 |  | mutableCopy | YES | NSMutableArray | NO | NO | 深拷贝 | NO |
 
 ## NSMutableArray
+不可变数组和可变数组的关系其实是子类和父类的关系。以下就是验证可变数组拷贝操作的测试代码：
 
 ```objc
 Person *person1 = [[Person alloc] init];
@@ -221,12 +256,23 @@ NSLog(@"end");
 2018-08-17 13:41:31.267208+0800 TestCocoOC[9649:625978] end
 ```
 
+Class Clusters 分析：
+1. `__NSArrayI` 是不可变数组子类，可看作 `NSArray`。
+2. `__NSArrayM` 是可变数组子类，通常可看作 `NSMutableArray`。
+
+根据以上测试代码和打印的结果显示，可进行以下分析：
+1. 变量 `array`、`copyArray` 和 `mutableCopyArray` 打印出来的地址是**不相同**的，说明都是容器的深拷贝。
+2. 数组里的元素打印的对象地址都是一样的。  
+
+根据以上验证可总结以下结果：
+
 | 类名 | 操作 | 新对象 | 新类名 | 新元素对象 | 调用旧元素对应的Copy方法 | 拷贝类型 | 元素拷贝 |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | NSMutableArray | copy | YES | NSArray | NO | NO | 深拷贝 | NO |
 |  | mutableCopy | YES | NSMutableArray | NO | NO | 深拷贝 | NO |
 
 ## NSDictionary
+`key-value` 其实就是 Hash 表，里面的 `key` 都是**字符串常量**。当然，拷贝操作也不会对元素做处理。验证拷贝特性的测试代码如下：
 
 ```objc
 Person *person = [[Person alloc] init];
@@ -262,12 +308,24 @@ person = "<Person: 0x600000037da0>";
 2018-08-17 13:41:48.390375+0800 TestCocoOC[9649:625978] end
 ```
 
+Class Clusters 分析：
+1. `__NSDictionaryI` 是不可变字典子类，可看作 `NSDictionary`。
+2. `__NSDictionaryM` 是可变字典子类，通常可看作 `NSMutableDictionary`。
+
+根据以上测试代码和打印的结果显示，可进行以下分析：
+1. 变量 `dict` 和 `copyDict` 打印出来的地址是相同的，都是 `0x6000000730c0`而且类名相同，都是 `__NSDictionaryI`，说明只是浅拷贝，而且是 `NSDictionary`。
+2. 变量 `mutableCopyDict` 打印出的类名 `__NSDictionaryM`，所以是 `NSMutableDictionary`。
+3. 打印出来的元素对象（Person）地址都是一样的。
+
+根据以上验证可总结以下结果：
+
 | 类名 | 操作 | 新对象 | 新类名 | 新元素对象 | 调用旧元素对应的Copy方法 | 拷贝类型 | 元素拷贝 |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | NSDictionary | copy | NO | NSDictionary | NO | NO | 浅拷贝 | NO |
 |  | mutableCopy | YES | NSMutableDictionary | NO | NO | 深拷贝 | NO |
 
 ## NSMutableDictionary
+可变字典类的验证拷贝操作的测试代码如下：
 
 ```objc
 Person *person = [[Person alloc] init];
@@ -303,12 +361,24 @@ person = "<Person: 0x6040000391e0>";
 2018-08-17 13:42:18.754877+0800 TestCocoOC[9649:625978] end
 ```
 
+Class Clusters 分析：
+1. `__NSDictionaryI` 是不可变字典子类，可看作 `NSDictionary`。
+2. `__NSFrozenDictionaryM` 是**可变字典类**的副本类，可看作 `NSDictionary`。
+3. `__NSDictionaryM` 是可变字典子类，通常可看作 `NSMutableDictionary`。
+
+根据以上测试代码和打印的结果显示，可进行以下分析：
+1. 变量 `dict`、`copyDict` 和 `mutableCopyDict` 打印出来的地址是**不相同**的，说明都是容器的深拷贝。
+2. 打印出来的元素对象（Person）地址都是一样的。
+
+根据以上验证可总结以下结果：
+
 | 类名 | 操作 | 新对象 | 新类名 | 新元素对象 | 调用旧元素对应的Copy方法 | 拷贝类型 | 元素拷贝 |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | NSMutableDictionary | copy | YES | NSDictionary | NO | NO | 深拷贝 | NO |
 |  | mutableCopy | YES | NSMutableDictionary | NO | NO | 深拷贝 | NO |
 
 ## NSSet
+不可变去重无序集合，里面的元素都是唯一的。验证拷贝操作的测试代码如下：
 
 ```objc
 Person *person1 = [[Person alloc] init];
@@ -344,12 +414,24 @@ NSLog(@"end");
 2018-08-17 13:43:29.317455+0800 TestCocoOC[9813:648649] end
 ```
 
+Class Clusters 分析：
+1. `__NSSetI` 是不可变去重无序集合子类，可看作 `NSSet`。
+2. `__NSSetM` 是可变去重无序集合子类，通常可看作 `NSMutableSet`。
+
+根据以上测试代码和打印的结果显示，可进行以下分析：
+1. 变量 `set` 和 `copySet` 打印出来的地址是相同的，都是 `0x60400024d5c0`而且类名相同，都是 `__NSSetI`，说明只是浅拷贝，而且是 `NSSet`。
+2. 变量 `mutableCopySet` 打印出的类名 `__NSSetM`，所以是 `NSMutableSet`。
+3. 打印出来的元素对象（Person）地址都是一样的。
+
+根据以上验证可总结以下结果：
+
 | 类名 | 操作 | 新对象 | 新类名 | 新元素对象 | 调用旧元素对应的Copy方法 | 拷贝类型 | 元素拷贝 |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | NSSet | copy | NO | NSSet | NO | NO | 浅拷贝 | NO |
 |  | mutableCopy | YES | NSMutableSet | NO | NO | 深拷贝 | NO |
 
 ## NSMutableSet
+可变去重无序集合，里面的元素都是唯一的。验证拷贝操作的测试代码如下：
 
 ```objc
 Person *person1 = [[Person alloc] init];
@@ -385,6 +467,15 @@ NSLog(@"end");
 2018-08-17 13:43:52.279086+0800 TestCocoOC[9813:648649] end
 ```
 
+Class Clusters 分析：
+1. `__NSSetI` 是不可变去重无序集合子类，可看作 `NSSet`。
+2. `__NSSetM` 是可变去重无序集合子类，通常可看作 `NSMutableSet`。
+
+根据以上测试代码和打印的结果显示，可进行以下分析：
+1. 变量 `set`、`copySet` 和 `mutableCopySet` 打印出来的地址是**不相同**的，说明都是容器的深拷贝。
+2. 数组里的元素打印的对象地址都是一样的。  
+
+根据以上验证可总结以下结果：
 
 | 类名 | 操作 | 新对象 | 新类名 | 新元素对象 | 调用旧元素对应的Copy方法 | 拷贝类型 | 元素拷贝 |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
@@ -392,5 +483,9 @@ NSLog(@"end");
 |  | mutableCopy | YES | NSMutableSet | NO | NO | 深拷贝 | NO |
 
 # 结论分析
-
+上一节的验证结果符合**结论概括**所描述的。虽然验证过程输出的类比较复杂，Apple 引进了 `Class Clusters` 和 `Tagged Pointer` 的设计思想，但是还是这不妨碍拷贝操作的总结。不过有时间的话还是研究一下这两个设计思想，对以后设计架构会大有进步。
+根据这篇文章的**结论概括**，在日常开发中可注意以下几点：
+1. Objective-C 类中的属性，`NSMutable` 开头的**可变集合类**属性不要用 `copy` 关键字去修饰，以为每次赋值操作拷贝出来的都是**不可变集合类**了。
+2. `Collection` 类`copy` 和 `mutableCopy` 方法，集合里面的元素对象都不会发生拷贝操作。简单的来说，只是对容器操作。
+3. 自定义类的拷贝操作是自己控制的。
 
