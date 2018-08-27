@@ -40,10 +40,13 @@ tags:
 ![LocalAuthentication.framework](http://upload-images.jianshu.io/upload_images/2613685-3ab3156e334f06bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 在使用TouchID的控制器下导入头文件：
 Swift3.0代码：
+
 ```swift
 import LocalAuthentication
 ```
+
 Objective-C代码：
+
 ```objective-C
 #import <LocalAuthentication/LocalAuthentication.h>
 ```
@@ -63,6 +66,7 @@ if ([UIDevice currentDevice].systemVersion.floatValue < 8.0) {
 
 - **第三步**：判断 *TouchID* 是否可用并验证
 Swift3.0代码：
+
 ```swift
     func touchIDHandler() {
         let context = LAContext()
@@ -109,7 +113,9 @@ Swift3.0代码：
         }
     }
 ```
+
 Objective-C代码：
+
 ```objective-C
  - (void)touchIDHandler {
     LAContext *context = [[LAContext alloc] init];
@@ -188,6 +194,7 @@ Objective-C代码：
 ## APP生命周期详解
 【**简介**】APP的生命周期是基于 runtime 的机制，本文不对 runtime 以及 AppDelegate 进行详细的解读以及介绍。下面将对项目自动生成的主要方法进行简单介绍。
 Swift3.0 代码如下：
+
 ```swift
     /*
      *该方法初始化程序后， 系统会调用
@@ -252,6 +259,7 @@ Swift3.0 代码如下：
 - 实现一个锁屏类，将该锁屏window作为该类的属性存在，以致该 window 不被释放
 
 伪代码实现如下：
+
 ```swift
 /// 后台锁屏枚举
 ///
