@@ -32,18 +32,18 @@ tags:
 
 `ALNetWorkingSwift` 框架的依赖关系以及需要达到的效果图如下：
 
-![**依赖关系图**](https://alpics-1251916310.file.myqcloud.com/article/2018-11-15-al_net_%20dependencies%2023.44.54.jpg)
+![依赖关系图](https://alpics-1251916310.file.myqcloud.com/article/2018-11-15-al_net_%20dependencies%2023.44.54.jpg)
 
 ## 架构图
 `ALNetWorkingSwift` 框架，其中有一个 `Core` 模块，开发者可用直接使用 `cocoapods` 只依赖 `Core` 模块，整体的架构如下图所示：
 
-![**ALNetWorkingSwift 架构图**](https://alpics-1251916310.file.myqcloud.com/article/2018-11-18-al_net_framework.jpg)
+![ALNetWorkingSwift架构图](https://alpics-1251916310.file.myqcloud.com/article/2018-11-18-al_net_framework.jpg)
 
 如上图所示，开发者主要是调用 `ALNetHTTPRequestOperationManager` 类进行网络请求，其中可以通过 `ALNetHTTPCommonConfig` 进行基本配置，最后请求后回调的结构体是遵守 `ALNetHTTPResponse` 协议的结构体。结构体里面定义的 `data` 字段是一个泛型用于业务中使用。所以，可以根据不同的项目依赖 `Core` 模块，在项目中定制适合自己的网络请求模块。
 
 在架构图中，网络请求是基于 `Core` 模块进行发送请求和解析数据的。目前，这个模块封装的比较轻量级，灵活性也比较高。接下来具体介绍 `Core` 模块的架构，如下图所示：
 
-![**Core模块架构图**](https://alpics-1251916310.file.myqcloud.com/article/2018-11-18-al_net_core.jpg)
+![Core模块架构图](https://alpics-1251916310.file.myqcloud.com/article/2018-11-18-al_net_core.jpg)
 
 
 # 基本使用说明
