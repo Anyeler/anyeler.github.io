@@ -32,7 +32,7 @@ tags:
 
 `ALNetWorkingSwift` 框架的依赖关系以及需要达到的效果图如下：
 
-![依赖关系图](https://alpics-1251916310.file.myqcloud.com/article/2018-11-15-al_net_%20dependencies%2023.44.54.jpg)
+![依赖关系图](https://alpics-1251916310.file.myqcloud.com/article/2018-11-18-al_net_dependencies.jpg)
 
 ## 架构图
 `ALNetWorkingSwift` 框架，其中有一个 `Core` 模块，开发者可用直接使用 `cocoapods` 只依赖 `Core` 模块，整体的架构如下图所示：
